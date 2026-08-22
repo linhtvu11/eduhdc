@@ -1,0 +1,7 @@
+{
+  "protocol": "shuffle ranking-direction labels (rigor_audit.c1_null_test)",
+  "results": {
+    "correct": 0.7192982456140351,
+    "shuffled": 0.48245614035087714
+  }
+}

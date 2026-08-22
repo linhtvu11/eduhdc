@@ -1,0 +1,58 @@
+{
+  "protocol": "FW3a richer supervision (edges+expert+sampled trans, test held-out); FW3b depth-distilled multi-task; 5 seeds; Wilson CI",
+  "n_train_pairs": 5046,
+  "results": {
+    "FW3a_richer_supervision": {
+      "hop2-3": {
+        "dir_acc": 0.897,
+        "ci95": [
+          0.8908891463602019,
+          0.9028059477324514
+        ],
+        "n_pairs": 2000
+      },
+      "hop4-6": {
+        "dir_acc": 0.9267,
+        "ci95": [
+          0.9214261803001957,
+          0.9316461034512782
+        ],
+        "n_pairs": 2000
+      },
+      "hop7+": {
+        "dir_acc": 0.9917,
+        "ci95": [
+          0.9897233048004503,
+          0.993299057328914
+        ],
+        "n_pairs": 2000
+      }
+    },
+    "FW3b_depth_distilled": {
+      "hop2-3": {
+        "dir_acc": 0.8912,
+        "ci95": [
+          0.884945890254308,
+          0.8971536583830874
+        ],
+        "n_pairs": 2000
+      },
+      "hop4-6": {
+        "dir_acc": 0.9275,
+        "ci95": [
+          0.9222516051952467,
+          0.9324200641362628
+        ],
+        "n_pairs": 2000
+      },
+      "hop7+": {
+        "dir_acc": 0.9903,
+        "ci95": [
+          0.988181889893125,
+          0.9920415474711769
+        ],
+        "n_pairs": 2000
+      }
+    }
+  }
+}

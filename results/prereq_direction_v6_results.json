@@ -1,0 +1,61 @@
+{
+  "protocol": "independent Junyi-DAG held-out direction + 2-hop transitivity; frozen v4 config (no tuning on test); 10 seeds; pooled-binomial Wilson CI over pairs x seeds",
+  "results": {
+    "EduBind": {
+      "dir_acc": 0.4844,
+      "dir_ci95": [
+        0.4774773874911056,
+        0.49132860425400016
+      ],
+      "trans_acc": 0.4304812834224599,
+      "trans_ci95": [
+        0.42047537562559445,
+        0.4405442935550339
+      ],
+      "n_anc_pairs": 2000,
+      "n_chains": 935,
+      "pooled_trials_dir": 20000,
+      "pooled_trials_trans": 9350,
+      "per_seed_diracc": [
+        0.509,
+        0.469,
+        0.4925,
+        0.479,
+        0.4875,
+        0.471,
+        0.4895,
+        0.461,
+        0.4935,
+        0.492
+      ]
+    },
+    "MAP": {
+      "dir_acc": 0.1543,
+      "dir_ci95": [
+        0.14935995312073785,
+        0.15937282548714715
+      ],
+      "trans_acc": 0.14727272727272728,
+      "trans_ci95": [
+        0.1402344298174238,
+        0.1546007531944416
+      ],
+      "n_anc_pairs": 2000,
+      "n_chains": 935,
+      "pooled_trials_dir": 20000,
+      "pooled_trials_trans": 9350,
+      "per_seed_diracc": [
+        0.156,
+        0.1515,
+        0.152,
+        0.154,
+        0.1605,
+        0.1575,
+        0.169,
+        0.1445,
+        0.138,
+        0.16
+      ]
+    }
+  }
+}

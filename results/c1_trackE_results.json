@@ -1,0 +1,13 @@
+{
+  "protocol": "diracc_trackE.run_encoder, EduBind ranking loss, 3 seeds",
+  "results": {
+    "all-MiniLM-L6-v2": {
+      "diracc_mean": 0.7105263157894738,
+      "diracc_std": 1.1102230246251565e-16
+    },
+    "paraphrase-multilingual-MiniLM-L12-v2": {
+      "diracc_mean": 0.5,
+      "diracc_std": 0.0
+    }
+  }
+}

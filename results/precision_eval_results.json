@@ -1,0 +1,92 @@
+{
+  "config": {
+    "D": 2048,
+    "K": 100,
+    "T": 50,
+    "n_trials": 200,
+    "ops": [
+      "map",
+      "hrr",
+      "edubind"
+    ],
+    "dtypes": [
+      "fp32",
+      "bf16",
+      "fp16",
+      "int8"
+    ]
+  },
+  "results": {
+    "map": {
+      "fp32": {
+        "unbind_cos_vs_true": 0.9999998807907104,
+        "unbind_cos_vs_fp32": 0.9999998807907104,
+        "retrieval_acc": 0.7926999926567078
+      },
+      "bf16": {
+        "unbind_cos_vs_true": 0.9999998807907104,
+        "unbind_cos_vs_fp32": 0.9999998807907104,
+        "retrieval_acc": 0.7917999625205994
+      },
+      "fp16": {
+        "unbind_cos_vs_true": 0.9999998807907104,
+        "unbind_cos_vs_fp32": 0.9999998807907104,
+        "retrieval_acc": 0.7925999760627747
+      },
+      "int8": {
+        "unbind_cos_vs_true": 0.9999998807907104,
+        "unbind_cos_vs_fp32": 0.9999998807907104,
+        "retrieval_acc": 0.7960000038146973
+      }
+    },
+    "hrr": {
+      "fp32": {
+        "unbind_cos_vs_true": 0.7087824940681458,
+        "unbind_cos_vs_fp32": 1.0,
+        "retrieval_acc": 0.7935999631881714
+      },
+      "bf16": {
+        "unbind_cos_vs_true": 0.708139181137085,
+        "unbind_cos_vs_fp32": 0.9999972581863403,
+        "retrieval_acc": 0.8021000027656555
+      },
+      "fp16": {
+        "unbind_cos_vs_true": 0.7058102488517761,
+        "unbind_cos_vs_fp32": 1.0,
+        "retrieval_acc": 0.7954999804496765
+      },
+      "int8": {
+        "unbind_cos_vs_true": 0.7072473168373108,
+        "unbind_cos_vs_fp32": 0.9998621940612793,
+        "retrieval_acc": 0.790399968624115
+      }
+    },
+    "edubind": {
+      "fp32": {
+        "unbind_cos_vs_true": 1.0,
+        "unbind_cos_vs_fp32": 1.0,
+        "retrieval_acc": 0.7901999950408936
+      },
+      "bf16": {
+        "unbind_cos_vs_true": 0.9999967813491821,
+        "unbind_cos_vs_fp32": 0.9999967813491821,
+        "retrieval_acc": 0.7863999605178833
+      },
+      "fp16": {
+        "unbind_cos_vs_true": 1.0,
+        "unbind_cos_vs_fp32": 1.0,
+        "retrieval_acc": 0.7929999828338623
+      },
+      "int8": {
+        "unbind_cos_vs_true": 0.9999847412109375,
+        "unbind_cos_vs_fp32": 0.9999847412109375,
+        "retrieval_acc": 0.7963999509811401
+      }
+    }
+  },
+  "summary": {
+    "mean_int8_delta_acc": 0.0020999908447265625,
+    "mean_bf16_delta_acc": 0.0012666583061218262
+  },
+  "elapsed_sec": 1.401635400019586
+}

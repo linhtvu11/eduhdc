@@ -1,0 +1,327 @@
+{
+  "config": {
+    "n_folds": 3,
+    "num_skills": 249,
+    "num_students": 1000,
+    "op_types": [
+      "edubind",
+      "map"
+    ],
+    "vsa_dims": [
+      256,
+      512,
+      1024,
+      2048
+    ],
+    "freezes": [
+      false,
+      true
+    ],
+    "dkt_params": 163449
+  },
+  "results": {
+    "DKT (LSTM Baseline)": {
+      "op": "dkt",
+      "vsa_dim": null,
+      "frozen": null,
+      "params": 163449,
+      "params_ratio_vs_dkt": 1.0,
+      "auc_mean": 0.6300112504020808,
+      "auc_std": 0.005183902117451324,
+      "acc_mean": 0.6940616211172634,
+      "latency_ms": 0.07950710065527355,
+      "aucs": [
+        0.6310574921601221,
+        0.6232041582164123,
+        0.6357721008297078
+      ]
+    },
+    "SAKT (Transformer Baseline)": {
+      "op": "sakt",
+      "vsa_dim": null,
+      "frozen": null,
+      "params": 204289,
+      "params_ratio_vs_dkt": 1.249863871911116,
+      "auc_mean": 0.6301634470076248,
+      "auc_std": 0.003804273501926821,
+      "acc_mean": 0.6897710758281329,
+      "latency_ms": 0.12175107118969906,
+      "aucs": [
+        0.6345199560812634,
+        0.6307191212984588,
+        0.6252512636431525
+      ]
+    },
+    "edubind-d256-learned": {
+      "op": "edubind",
+      "vsa_dim": 256,
+      "frozen": false,
+      "params": 65084,
+      "params_ratio_vs_dkt": 0.398191484805658,
+      "auc_mean": 0.666483787938636,
+      "auc_std": 0.00784883161817378,
+      "acc_mean": 0.7076374563111765,
+      "latency_ms": 16.667360479918994,
+      "aucs": [
+        0.674383235153827,
+        0.6557808956728124,
+        0.6692872329892687
+      ]
+    },
+    "edubind-d256-frozen": {
+      "op": "edubind",
+      "vsa_dim": 256,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.662540277607734,
+      "auc_std": 0.004340340576491907,
+      "acc_mean": 0.7055198553959623,
+      "latency_ms": 16.893957539285072,
+      "aucs": [
+        0.6662069692341707,
+        0.6564437916528622,
+        0.6649700719361692
+      ]
+    },
+    "edubind-d512-learned": {
+      "op": "edubind",
+      "vsa_dim": 512,
+      "frozen": false,
+      "params": 129340,
+      "params_ratio_vs_dkt": 0.7913171692699251,
+      "auc_mean": 0.669474055127552,
+      "auc_std": 0.006262352587121137,
+      "acc_mean": 0.7088026838318532,
+      "latency_ms": 16.58892388284089,
+      "aucs": [
+        0.6721439151315636,
+        0.675452091388108,
+        0.6608261588629842
+      ]
+    },
+    "edubind-d512-frozen": {
+      "op": "edubind",
+      "vsa_dim": 512,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.6637479086011595,
+      "auc_std": 0.0019794923639461903,
+      "acc_mean": 0.7059335490703812,
+      "latency_ms": 17.12349795439948,
+      "aucs": [
+        0.6654269855171944,
+        0.6609684962913386,
+        0.6648482439949457
+      ]
+    },
+    "edubind-d1024-learned": {
+      "op": "edubind",
+      "vsa_dim": 1024,
+      "frozen": false,
+      "params": 257852,
+      "params_ratio_vs_dkt": 1.5775685381984594,
+      "auc_mean": 0.6690556497064376,
+      "auc_std": 0.0063004058246984174,
+      "acc_mean": 0.7073231697004173,
+      "latency_ms": 17.403820670488063,
+      "aucs": [
+        0.67734435948682,
+        0.6677424850193736,
+        0.662080104613119
+      ]
+    },
+    "edubind-d1024-frozen": {
+      "op": "edubind",
+      "vsa_dim": 1024,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.6520098931108606,
+      "auc_std": 0.010287438822940932,
+      "acc_mean": 0.6999823116565759,
+      "latency_ms": 17.201966954386567,
+      "aucs": [
+        0.6384716275501092,
+        0.6541656084476742,
+        0.663392443334798
+      ]
+    },
+    "edubind-d2048-learned": {
+      "op": "edubind",
+      "vsa_dim": 2048,
+      "frozen": false,
+      "params": 514876,
+      "params_ratio_vs_dkt": 3.150071276055528,
+      "auc_mean": 0.6701848086899366,
+      "auc_std": 0.004265083332783373,
+      "acc_mean": 0.7068272212275954,
+      "latency_ms": 17.073100305743612,
+      "aucs": [
+        0.6711801430880606,
+        0.6748391688423462,
+        0.6645351141394027
+      ]
+    },
+    "edubind-d2048-frozen": {
+      "op": "edubind",
+      "vsa_dim": 2048,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.664491401198665,
+      "auc_std": 0.0026899572544778687,
+      "acc_mean": 0.7071032577208056,
+      "latency_ms": 17.200217308680124,
+      "aucs": [
+        0.6673117778107022,
+        0.6608703506465798,
+        0.6652920751387129
+      ]
+    },
+    "map-d256-learned": {
+      "op": "map",
+      "vsa_dim": 256,
+      "frozen": false,
+      "params": 65084,
+      "params_ratio_vs_dkt": 0.398191484805658,
+      "auc_mean": 0.664859423316008,
+      "auc_std": 0.001710298568018263,
+      "acc_mean": 0.7067510072853452,
+      "latency_ms": 13.030234716268339,
+      "aucs": [
+        0.6668923638786938,
+        0.6649778743046604,
+        0.6627080317646696
+      ]
+    },
+    "map-d256-frozen": {
+      "op": "map",
+      "vsa_dim": 256,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.6630956952943716,
+      "auc_std": 0.003072336771538133,
+      "acc_mean": 0.7049550570337927,
+      "latency_ms": 12.849909087199713,
+      "aucs": [
+        0.6667004121601305,
+        0.6591925293750949,
+        0.6633941443478896
+      ]
+    },
+    "map-d512-learned": {
+      "op": "map",
+      "vsa_dim": 512,
+      "frozen": false,
+      "params": 129340,
+      "params_ratio_vs_dkt": 0.7913171692699251,
+      "auc_mean": 0.6730913296826021,
+      "auc_std": 0.0034190032768327714,
+      "acc_mean": 0.7094660398136963,
+      "latency_ms": 13.017659659706203,
+      "aucs": [
+        0.6779221400986026,
+        0.6704975200072105,
+        0.670854328941993
+      ]
+    },
+    "map-d512-frozen": {
+      "op": "map",
+      "vsa_dim": 512,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.6633449929316392,
+      "auc_std": 0.0026841782732293673,
+      "acc_mean": 0.7041965885571967,
+      "latency_ms": 12.937782980306517,
+      "aucs": [
+        0.6660315589338558,
+        0.6596792130326825,
+        0.6643242068283792
+      ]
+    },
+    "map-d1024-learned": {
+      "op": "map",
+      "vsa_dim": 1024,
+      "frozen": false,
+      "params": 257852,
+      "params_ratio_vs_dkt": 1.5775685381984594,
+      "auc_mean": 0.6713312439360869,
+      "auc_std": 0.005049313643253937,
+      "acc_mean": 0.70809077341706,
+      "latency_ms": 13.002453590823462,
+      "aucs": [
+        0.6706791598343191,
+        0.6778155683891582,
+        0.6654990035847833
+      ]
+    },
+    "map-d1024-frozen": {
+      "op": "map",
+      "vsa_dim": 1024,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.6630923415220141,
+      "auc_std": 0.0023116432032835475,
+      "acc_mean": 0.7051363718889213,
+      "latency_ms": 12.7955841896035,
+      "aucs": [
+        0.6643228083402257,
+        0.6598541317489487,
+        0.6651000844768679
+      ]
+    },
+    "map-d2048-learned": {
+      "op": "map",
+      "vsa_dim": 2048,
+      "frozen": false,
+      "params": 514876,
+      "params_ratio_vs_dkt": 3.150071276055528,
+      "auc_mean": 0.6623027686467186,
+      "auc_std": 0.001616370772989197,
+      "acc_mean": 0.7061321724833567,
+      "latency_ms": 13.407530849343281,
+      "aucs": [
+        0.6626388823769298,
+        0.6601765870705862,
+        0.6640928364926395
+      ]
+    },
+    "map-d2048-frozen": {
+      "op": "map",
+      "vsa_dim": 2048,
+      "frozen": true,
+      "params": 828,
+      "params_ratio_vs_dkt": 0.005065800341390893,
+      "auc_mean": 0.6624810862255638,
+      "auc_std": 0.0009422379038757359,
+      "acc_mean": 0.7036544235680774,
+      "latency_ms": 13.043976114440552,
+      "aucs": [
+        0.6628150303519813,
+        0.6611969394259893,
+        0.6634312888987206
+      ]
+    }
+  },
+  "winners_lighter_and_better": [
+    "edubind-d256-frozen",
+    "edubind-d512-frozen",
+    "edubind-d1024-frozen",
+    "edubind-d2048-frozen",
+    "map-d256-frozen",
+    "map-d512-frozen",
+    "map-d1024-frozen",
+    "map-d2048-frozen",
+    "edubind-d256-learned",
+    "map-d256-learned",
+    "edubind-d512-learned",
+    "map-d512-learned"
+  ],
+  "elapsed_sec": 7271.547071199981
+}

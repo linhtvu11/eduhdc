@@ -1,0 +1,36 @@
+{
+  "protocol": "ensemble EduBind-probe(avg5) + curriculum-potential; margins normalized by TRAIN-edge stats; held-out transitive pairs >=2 hops",
+  "results": {
+    "hop2-3": {
+      "n_pairs": 2000,
+      "probe": 0.779,
+      "potential": 0.6465,
+      "ensemble": 0.4745,
+      "ensemble_ci95": [
+        0.4526848707583717,
+        0.4964129022392544
+      ]
+    },
+    "hop4-6": {
+      "n_pairs": 2000,
+      "probe": 0.643,
+      "potential": 0.772,
+      "ensemble": 0.4315,
+      "ensemble_ci95": [
+        0.40994489706223386,
+        0.4533177480490364
+      ]
+    },
+    "hop7+": {
+      "n_pairs": 2000,
+      "probe": 0.624,
+      "potential": 0.9775,
+      "ensemble": 0.641,
+      "ensemble_ci95": [
+        0.6197240144570485,
+        0.661735358379607
+      ]
+    },
+    "overall_weighted_ensemble": 0.5156666666666667
+  }
+}
