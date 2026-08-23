@@ -38,6 +38,14 @@ from eduhdc.operators import BipolarMAP, RealHRR, EduBindBlockDiag
 RESULTS_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "results")
 
 
+
+def _stable_seed(*parts) -> int:
+    """Deterministic seed. `hash()` of a tuple containing a str is randomised
+    per process (PYTHONHASHSEED), so the previous `hash(...)` seeds made this
+    sweep irreproducible run to run. CRC32 of the repr is stable."""
+    import zlib
+    return zlib.crc32(repr(parts).encode()) % (2 ** 31)
+
 def _make_op(op_type, dim, device):
     if op_type == "map":
         return BipolarMAP(dim=dim, device=device), dim
@@ -145,7 +153,7 @@ def main():
         for T in T_list:
             row = []
             for lv in [0, 1, 2]:
-                a = measure(op, K, T, D, n_trials, device, level=lv, seed=hash((op, T)) % (2**31))
+                a = measure(op, K, T, D, n_trials, device, level=lv, seed=_stable_seed(op, T, lv))
                 accs[lv].append(a)
                 row.append(a)
             print(f"  {T:>5d} | {row[0]:11.3f} | {row[1]:11.3f} | {row[2]:8.3f}")

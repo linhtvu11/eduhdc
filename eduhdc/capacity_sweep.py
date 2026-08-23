@@ -44,6 +44,14 @@ from eduhdc.operators import BipolarMAP, RealHRR, EduBindBlockDiag
 RESULTS_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "results")
 
 
+
+def _stable_seed(*parts) -> int:
+    """Deterministic seed. `hash()` of a tuple containing a str is randomised
+    per process (PYTHONHASHSEED), so the previous `hash(...)` seeds made this
+    sweep irreproducible run to run. CRC32 of the repr is stable."""
+    import zlib
+    return zlib.crc32(repr(parts).encode()) % (2 ** 31)
+
 def _make_op(op_type: str, dim: int, device: str):
     if op_type == "map":
         return BipolarMAP(dim=dim, device=device), dim
@@ -179,7 +187,7 @@ def run_capacity_sweep():
             row_acc = []
             for D in D_list:
                 acc = measure_retrieval_accuracy(op, K_fixed, T, D, n_trials, device,
-                                                 seed=hash((op, T, D)) % (2**31))
+                                                 seed=_stable_seed(op, T, D))
                 row_acc.append(acc)
                 sweep[op]["acc"][f"T{T}_D{D}"] = acc
                 all_load.append(T / D)
@@ -216,7 +224,7 @@ def run_capacity_sweep():
     k_curve = {}
     for K in K_list:
         acc = measure_retrieval_accuracy("edubind", K, 100, 2048, n_trials, device,
-                                         seed=hash(("k", K)) % (2**31))
+                                         seed=_stable_seed("k", K))
         k_curve[K] = acc
         print(f"  K={K:>5d} | acc={acc:.3f} | chance={1.0/K:.4f}")
 
