@@ -33,7 +33,7 @@ from eduhdc.models import EduHDC_KT, DKT_Baseline, SAKT_Baseline
 from eduhdc.data_loader_real import load_assistments_real
 from eduhdc.kt_experiment_rigorous import train_and_eval_kt_model
 
-RESULTS_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "results")
+RESULTS_DIR = str(Path(__file__).resolve().parent.parent / "results")
 
 
 def count_trainable(m):
@@ -158,3 +158,4 @@ def run_ablation():
 
 if __name__ == "__main__":
     run_ablation()
+

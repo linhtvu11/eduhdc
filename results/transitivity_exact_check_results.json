@@ -1,0 +1,471 @@
+{
+  "task": "FW3 algebraic layer — runtime exact-unbind transitivity check",
+  "graph": {
+    "nodes": 832,
+    "edges": 971,
+    "removed_cycle_nodes": 3
+  },
+  "hop_length_distribution": {
+    "2": 1219,
+    "3": 1373,
+    "4": 1691,
+    "5": 1872,
+    "6": 2178,
+    "7": 2330,
+    "8": 2517,
+    "9": 2625,
+    "10": 2674,
+    "11": 2736,
+    "12": 2796,
+    "13": 2709,
+    "14": 2629,
+    "15": 2489,
+    "16": 2368,
+    "17": 2287,
+    "18": 2163,
+    "19": 2020,
+    "20": 1954,
+    "21": 1830,
+    "22": 1591,
+    "23": 1480,
+    "24": 1342,
+    "25": 1233,
+    "26": 1152,
+    "27": 1023,
+    "28": 903,
+    "29": 792,
+    "30": 619,
+    "31": 507,
+    "32": 353,
+    "33": 225,
+    "34": 153,
+    "35": 129,
+    "36": 111,
+    "37": 64,
+    "38": 40,
+    "39": 27,
+    "40": 12,
+    "41": 8
+  },
+  "total_transitive_pairs": 56224,
+  "max_chain_length": 41,
+  "chain_kind": "heterogeneous: an independent relation is drawn per hop, bound forward and unbound in reverse order, matching ChainTransitivity.lean::chainRoundtrip over a List of relations",
+  "trials": {
+    "integer_contents_per_length": 200,
+    "float_trials_per_length": 50,
+    "chain_lengths_tested": 40,
+    "total_integer_trials": 8000,
+    "total_float_trials": 2000
+  },
+  "exact_integer": {
+    "all_exact": true,
+    "per_length": {
+      "2": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.475
+      },
+      "3": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.78
+      },
+      "4": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.86
+      },
+      "5": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.94
+      },
+      "6": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.955
+      },
+      "7": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.985
+      },
+      "8": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "9": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.995
+      },
+      "10": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.995
+      },
+      "11": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 1.995
+      },
+      "12": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "13": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "14": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "15": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "16": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "17": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "18": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "19": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "20": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "21": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "22": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "23": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "24": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "25": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "26": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "27": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "28": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "29": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "30": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "31": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "32": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "33": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "34": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "35": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "36": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "37": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "38": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "39": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "40": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      },
+      "41": {
+        "tested": 200,
+        "exact_recover": 200,
+        "exact": true,
+        "mean_distinct_relations_per_chain": 2.0
+      }
+    }
+  },
+  "runtime_float": {
+    "max_abs_err_overall": 1.430511474609375e-06,
+    "per_length": {
+      "2": {
+        "trials": 50,
+        "max_abs_err": 2.384185791015625e-07
+      },
+      "3": {
+        "trials": 50,
+        "max_abs_err": 2.980232238769531e-07
+      },
+      "4": {
+        "trials": 50,
+        "max_abs_err": 3.5762786865234375e-07
+      },
+      "5": {
+        "trials": 50,
+        "max_abs_err": 4.172325134277344e-07
+      },
+      "6": {
+        "trials": 50,
+        "max_abs_err": 4.172325134277344e-07
+      },
+      "7": {
+        "trials": 50,
+        "max_abs_err": 4.76837158203125e-07
+      },
+      "8": {
+        "trials": 50,
+        "max_abs_err": 5.364418029785156e-07
+      },
+      "9": {
+        "trials": 50,
+        "max_abs_err": 5.364418029785156e-07
+      },
+      "10": {
+        "trials": 50,
+        "max_abs_err": 6.556510925292969e-07
+      },
+      "11": {
+        "trials": 50,
+        "max_abs_err": 5.960464477539062e-07
+      },
+      "12": {
+        "trials": 50,
+        "max_abs_err": 7.152557373046875e-07
+      },
+      "13": {
+        "trials": 50,
+        "max_abs_err": 5.960464477539062e-07
+      },
+      "14": {
+        "trials": 50,
+        "max_abs_err": 7.152557373046875e-07
+      },
+      "15": {
+        "trials": 50,
+        "max_abs_err": 7.152557373046875e-07
+      },
+      "16": {
+        "trials": 50,
+        "max_abs_err": 7.748603820800781e-07
+      },
+      "17": {
+        "trials": 50,
+        "max_abs_err": 8.344650268554688e-07
+      },
+      "18": {
+        "trials": 50,
+        "max_abs_err": 7.748603820800781e-07
+      },
+      "19": {
+        "trials": 50,
+        "max_abs_err": 7.152557373046875e-07
+      },
+      "20": {
+        "trials": 50,
+        "max_abs_err": 8.344650268554688e-07
+      },
+      "21": {
+        "trials": 50,
+        "max_abs_err": 9.5367431640625e-07
+      },
+      "22": {
+        "trials": 50,
+        "max_abs_err": 7.748603820800781e-07
+      },
+      "23": {
+        "trials": 50,
+        "max_abs_err": 8.344650268554688e-07
+      },
+      "24": {
+        "trials": 50,
+        "max_abs_err": 1.0132789611816406e-06
+      },
+      "25": {
+        "trials": 50,
+        "max_abs_err": 8.940696716308594e-07
+      },
+      "26": {
+        "trials": 50,
+        "max_abs_err": 9.5367431640625e-07
+      },
+      "27": {
+        "trials": 50,
+        "max_abs_err": 1.0132789611816406e-06
+      },
+      "28": {
+        "trials": 50,
+        "max_abs_err": 9.5367431640625e-07
+      },
+      "29": {
+        "trials": 50,
+        "max_abs_err": 1.0132789611816406e-06
+      },
+      "30": {
+        "trials": 50,
+        "max_abs_err": 9.5367431640625e-07
+      },
+      "31": {
+        "trials": 50,
+        "max_abs_err": 1.0132789611816406e-06
+      },
+      "32": {
+        "trials": 50,
+        "max_abs_err": 1.1324882507324219e-06
+      },
+      "33": {
+        "trials": 50,
+        "max_abs_err": 1.0132789611816406e-06
+      },
+      "34": {
+        "trials": 50,
+        "max_abs_err": 1.1324882507324219e-06
+      },
+      "35": {
+        "trials": 50,
+        "max_abs_err": 1.1920928955078125e-06
+      },
+      "36": {
+        "trials": 50,
+        "max_abs_err": 1.0728836059570312e-06
+      },
+      "37": {
+        "trials": 50,
+        "max_abs_err": 1.3113021850585938e-06
+      },
+      "38": {
+        "trials": 50,
+        "max_abs_err": 1.1920928955078125e-06
+      },
+      "39": {
+        "trials": 50,
+        "max_abs_err": 1.430511474609375e-06
+      },
+      "40": {
+        "trials": 50,
+        "max_abs_err": 1.1324882507324219e-06
+      },
+      "41": {
+        "trials": 50,
+        "max_abs_err": 1.430511474609375e-06
+      }
+    }
+  },
+  "honest_scope": "operator fidelity for pairs WITH a known intermediate path (problem b); NOT prediction for unknown pairs (problem c); algebraic layer, distinct from the statistical probe layer (FW3c 97.6%)"
+}

@@ -11,7 +11,7 @@ from collections import defaultdict, deque
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-DATA_ROOT = Path(__file__).resolve().parent.parent.parent / "data"
+DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
 
 
 class CurriculumGraph:
@@ -337,3 +337,4 @@ if __name__ == "__main__":
             print("  [ERROR] Cannot generate synthetic data without Junyi graph")
             
     print("\n[DONE] Data loader verification complete.")
+

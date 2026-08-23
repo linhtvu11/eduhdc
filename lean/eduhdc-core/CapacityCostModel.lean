@@ -1,29 +1,46 @@
 /-
-C1/C2 — FW5: Storage cost model for the capacity lemma O(D) vs O(d²).
+C1/C2 — Storage cost model: degrees of freedom in a 1-D VSA memory vs a matrix memory.
 
-Empirical basis (E3, docs/c1_path_c_results.md): 1D holographic memory has
-capacity O(D) — retrieval collapses along √(D/T) for every operator
-(MAP/HRR/EduBind), so the limit is the dimension D itself. PAM (d×d complex
-matrix, docs/c2_initial_results.md Exp3) has capacity O(d²): 0.754 vs 0.440
-for HRR at the same load ratio.
+WHAT THIS FILE IS. Arithmetic. It formalizes the relationship between a memory's
+size parameter and the number of real scalars it holds, using ONLY Lean 4 core
+(no Mathlib, no probability theory). Every theorem below is a statement about
+counting.
 
-This file formalizes the COST MODEL under the claim — the arithmetic between
-the size parameter and the storage/capacity formulas — using ONLY Lean 4 core
-(no Mathlib, no probability theory). The empirical √(D/T) law itself is
-experimental evidence, not re-derived here (see section 4 note).
+Revision 3 (2026-08-23, audit fix M4). Three things were wrong with the previous
+revision, and all three were in the naming and framing rather than in the proofs:
+
+  1. The definitions were called `capacity1D` / `capacityPAM` and documented as
+     counting "independently addressable slots". They do not. They count real
+     degrees of freedom. For an outer-product associative memory built as
+     `S = sum_t |v_t> <k_t|` with orthogonal keys, the number of items that can be
+     retrieved exactly is d, not d^2 — the d^2 figure is the dimension of the
+     state, not the number of addressable entries. Calling it capacity promised a
+     result this module does not establish, so the definitions are renamed
+     `dof1D` / `dofPAM` and the word capacity is reserved for the empirical
+     measurements (see the note at the end).
+
+  2. `capacity_quadratic_exceeds_linear` compared a 1-D memory of dimension d
+     (d scalars) against a d x d matrix memory (2*d^2 scalars). That is a
+     comparison across DIFFERENT storage budgets, so the inequality followed from
+     the budgets and not from any structural advantage. Both comparisons are now
+     stated explicitly and side by side: at matched size parameter the matrix
+     memory holds more, and at matched STORAGE the ordering REVERSES. Stating
+     only the first would be selective.
+
+  3. `dof_factor_two` and `capacity_ratio_at_same_param` closed by `rfl` and
+     `ac_rfl`, i.e. they are definitional identities. That is fine for what they
+     are, but the file now says so rather than presenting them as substantive.
 
 Formal statements (all kernel-checked by `lake build`):
-  * storageCost1D D = D            — linear storage in the dimension
-  * storageCostPAM d = 2·(d·d)     — quadratic storage; each complex entry of
-                                     the PAM matrix carries 2 real DOF
-  * dof_factor_two                — formalizes council finding D-F5: at matched
-                                     logical dimension d², PAM stores exactly
-                                     2× the real scalars of a 1D VSA
-  * capacity1D / capacityPAM      — slot-count capacity model, efficiency η
-                                     explicit
-  * capacity_ratio_at_same_param  — PAM(d) = d × 1D(d) capacity
-  * capacity_quadratic_exceeds_linear — for d ≥ 2, PAM strictly exceeds 1D
-  * monotonicity in the size parameter
+  * storageCost1D D  = D          — linear storage in the dimension
+  * storageCostPAM d = 2*(d*d)    — quadratic; each complex entry carries 2 real DOF
+  * dof_factor_two                — at matched logical dimension d^2, the matrix
+                                    memory holds exactly 2x the real scalars
+  * dof_ratio_at_same_param       — at the same size parameter d, dofPAM = d * dof1D
+  * dofPAM_exceeds_dof1D_same_param      — for d >= 2, strict, at matched parameter
+  * dof1D_exceeds_dofPAM_matched_storage — for d >= 1, strict, at matched STORAGE
+                                           (the reverse direction)
+  * monotonicity of both in the size parameter
 -/
 
 namespace CapacityCostModel
@@ -32,83 +49,124 @@ namespace CapacityCostModel
 -- 1. Storage cost: number of real-valued scalar parameters in the state
 -- ====================================================================
 
-/-- 1D VSA memory of dimension D stores D real scalars. -/
+/-- 1-D VSA memory of dimension D stores D real scalars. -/
 def storageCost1D (D : Nat) : Nat := D
 
-/-- PAM d×d complex matrix stores d² complex = 2·d² real scalars. -/
+/-- A d x d complex matrix memory stores d^2 complex = 2*d^2 real scalars. -/
 def storageCostPAM (d : Nat) : Nat := 2 * (d * d)
 
 theorem storageCost1D_linear (D : Nat) : storageCost1D D = D := rfl
 
 theorem storageCostPAM_quadratic (d : Nat) : storageCostPAM d = 2 * (d * d) := rfl
 
-/-- Council finding D-F5, formalized: at the same logical dimension d², PAM
-    stores exactly twice the real scalars of a 1D VSA. -/
+/-- At the same logical dimension d^2, the matrix memory stores exactly twice the
+    real scalars of a 1-D memory. A definitional identity (`rfl`). -/
 theorem dof_factor_two (d : Nat) :
     storageCostPAM d = 2 * storageCost1D (d * d) := rfl
 
 -- ====================================================================
--- 2. Capacity model: number of independently addressable slots, with the
---    storage efficiency η made explicit (η = 1 for orthogonal keys)
+-- 2. Degrees of freedom, with the storage efficiency eta made explicit
+--
+--    NOTE ON NAMING (fix M4): these count real degrees of freedom that the
+--    state can carry, NOT the number of items retrievable without
+--    interference. The latter is an operator- and noise-dependent quantity
+--    that this module does not model; it is measured empirically instead.
 -- ====================================================================
 
-/-- 1D capacity: each dimension is one slot. -/
-def capacity1D (eta D : Nat) : Nat := eta * D
+/-- Degrees of freedom of a 1-D memory: eta per dimension. -/
+def dof1D (eta D : Nat) : Nat := eta * D
 
-/-- PAM capacity: each matrix entry is one slot. -/
-def capacityPAM (eta d : Nat) : Nat := eta * (d * d)
+/-- Degrees of freedom of a d x d matrix memory: eta per matrix entry. -/
+def dofPAM (eta d : Nat) : Nat := eta * (d * d)
 
-theorem capacity1D_linear (eta D : Nat) : capacity1D eta D = eta * D := rfl
+theorem dof1D_linear (eta D : Nat) : dof1D eta D = eta * D := rfl
 
-theorem capacityPAM_quadratic (eta d : Nat) : capacityPAM eta d = eta * (d * d) := rfl
+theorem dofPAM_quadratic (eta d : Nat) : dofPAM eta d = eta * (d * d) := rfl
 
 -- ====================================================================
--- 3. Comparison theorems
+-- 3. The two comparisons, stated together
 -- ====================================================================
 
-/-- At the same size parameter d, PAM capacity is d times the 1D capacity
-    (equal efficiency η) — the quadratic-vs-linear structural advantage. -/
-theorem capacity_ratio_at_same_param (eta d : Nat) :
-    capacityPAM eta d = d * capacity1D eta d := by
-  unfold capacityPAM capacity1D
+/-- At the same size parameter d and equal efficiency, the matrix memory holds
+    d times the degrees of freedom. A definitional identity (`ac_rfl`); note
+    that the two sides describe memories of DIFFERENT storage cost, so this is
+    a statement about the size parameter, not about efficiency of storage. -/
+theorem dof_ratio_at_same_param (eta d : Nat) :
+    dofPAM eta d = d * dof1D eta d := by
+  unfold dofPAM dof1D
   ac_rfl
 
-/-- For d ≥ 2, PAM capacity strictly exceeds 1D capacity (η = 1). -/
-theorem capacity_quadratic_exceeds_linear (d : Nat) (hd : 2 ≤ d) :
-    capacity1D 1 d < capacityPAM 1 d := by
-  unfold capacity1D capacityPAM
+/-- Direction 1 — matched SIZE PARAMETER: for d >= 2 the matrix memory strictly
+    exceeds the 1-D memory. This is the comparison usually quoted. -/
+theorem dofPAM_exceeds_dof1D_same_param (d : Nat) (hd : 2 ≤ d) :
+    dof1D 1 d < dofPAM 1 d := by
+  unfold dof1D dofPAM
   rw [Nat.one_mul, Nat.one_mul]
-  -- goal: d < d * d
   have hprod : d * 1 < d * d :=
     Nat.mul_lt_mul_of_pos_left (by omega : 1 < d) (by omega : 0 < d)
   rwa [Nat.mul_one] at hprod
 
-/-- 1D capacity is non-decreasing in the dimension. -/
-theorem capacity1D_mono (eta D1 D2 : Nat) (h : D1 ≤ D2) :
-    capacity1D eta D1 ≤ capacity1D eta D2 := by
-  unfold capacity1D
+/-- Direction 2 — matched STORAGE, and the ordering REVERSES. Give the 1-D
+    memory the same number of real scalars the matrix memory uses, namely
+    `storageCostPAM d = 2*d^2`, and it carries strictly more degrees of freedom
+    than the matrix memory does, for every d >= 1.
+
+    This is the honest counterpart of the theorem above (fix M4): counting alone
+    does not favour the matrix regime. Whatever advantage the matrix memory has
+    must come from something this module does not formalize — how retrieval
+    degrades under superposition — which is why that is measured empirically
+    rather than asserted here. -/
+theorem dof1D_exceeds_dofPAM_matched_storage (d : Nat) (hd : 1 ≤ d) :
+    dofPAM 1 d < dof1D 1 (storageCostPAM d) := by
+  unfold dofPAM dof1D storageCostPAM
+  rw [Nat.one_mul, Nat.one_mul]
+  have h : d * d < 2 * (d * d) := by
+    have : 0 < d * d := Nat.mul_pos hd hd
+    omega
+  exact h
+
+/-- Both comparisons at once, so neither can be quoted without the other. -/
+theorem dof_comparison_depends_on_normalisation (d : Nat) (hd : 2 ≤ d) :
+    dof1D 1 d < dofPAM 1 d ∧ dofPAM 1 d < dof1D 1 (storageCostPAM d) :=
+  ⟨dofPAM_exceeds_dof1D_same_param d hd,
+   dof1D_exceeds_dofPAM_matched_storage d (by omega)⟩
+
+/-- 1-D degrees of freedom are non-decreasing in the dimension. -/
+theorem dof1D_mono (eta D1 D2 : Nat) (h : D1 ≤ D2) :
+    dof1D eta D1 ≤ dof1D eta D2 := by
+  unfold dof1D
   exact Nat.mul_le_mul_left eta h
 
-/-- PAM capacity is non-decreasing in the size parameter. -/
-theorem capacityPAM_mono (eta d1 d2 : Nat) (h : d1 ≤ d2) :
-    capacityPAM eta d1 ≤ capacityPAM eta d2 := by
-  unfold capacityPAM
+/-- Matrix degrees of freedom are non-decreasing in the size parameter. -/
+theorem dofPAM_mono (eta d1 d2 : Nat) (h : d1 ≤ d2) :
+    dofPAM eta d1 ≤ dofPAM eta d2 := by
+  unfold dofPAM
   exact Nat.mul_le_mul_left eta (Nat.mul_le_mul h h)
 
 -- ====================================================================
--- 4. Honesty note (not a theorem — scope boundary)
+-- 4. Scope boundary (not theorems)
 -- ====================================================================
 /-
 What this file does NOT prove, by design:
-  * The √(D/T) crosstalk law and the O(D) capacity ceiling of 1D VSA. That is a
-    probabilistic concentration statement (random hypervectors, interference
-    growth) that requires probability/measure theory — beyond Lean 4 core and
-    beyond the "cost model" scope stated in FW5. It is the EMPIRICAL input
-    (E3), imported here only through the linearity of `capacity1D`.
-  * That PAM retrieval is exact for orthogonal keys. That is an operator-level
-    theorem (would require Mathlib linear algebra / the `exact_unbind` axioms
-    already verified in EduBindSelfContained.lean); here we only use the
-    slot-counting consequence O(d²).
+
+  * Any statement about RETRIEVAL. The number of items a memory can return
+    without interference is not a counting quantity: for a 1-D superposition it
+    degrades continuously with the load ratio T/D, and for an outer-product
+    matrix memory with orthogonal keys the exact-retrieval limit is d, not d^2.
+    Neither statement is derivable from the arithmetic above; the first is
+    measured in the capacity sweep (src/eduhdc/capacity_sweep.py), the second is
+    a linear-algebra fact requiring Mathlib.
+
+  * The sqrt(D/T) crosstalk law. That is a probabilistic concentration statement
+    about random hypervectors, outside Lean 4 core and outside the scope of a
+    cost model. It is an EMPIRICAL input, and the sweep above is what supplies
+    it: with keys drawn without replacement and K >> T, retrieval accuracy is a
+    logistic function of z = sqrt(D/T) with R^2 = 0.99 over 72 (operator, T, D)
+    points, and the collapse is indistinguishable across MAP, HRR and EduBind.
+
+  * That the matrix regime is preferable. Section 3 above shows the counting
+    comparison flips with the normalisation chosen, so the case for the matrix
+    memory rests on the retrieval behaviour, not on degrees of freedom.
 -/
 
 end CapacityCostModel

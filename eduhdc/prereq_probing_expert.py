@@ -51,7 +51,7 @@ ASYM_GAP = 1.0   # min |score_AB - score_BA| to count a pair as a clean directio
 DIR_LOSS_WEIGHT = 0.3
 DIR_RANK_MARGIN = 0.5
 
-RESULTS_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "results")
+RESULTS_DIR = str(Path(__file__).resolve().parent.parent / "results")
 
 
 def build_tensors(pairs, ex_to_dense, device):
@@ -231,3 +231,4 @@ def run_expert_prereq_probing():
 
 if __name__ == "__main__":
     run_expert_prereq_probing()
+

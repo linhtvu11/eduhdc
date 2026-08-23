@@ -18,7 +18,7 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Set
 
-DATA_ROOT = Path(__file__).resolve().parent.parent.parent / "data"
+DATA_ROOT = Path(__file__).resolve().parent.parent / "data"
 
 
 # ==============================================================================
@@ -436,3 +436,4 @@ if __name__ == "__main__":
               f"{s['num_students']:,} students | {s['num_skills']:,} exercises")
 
     print("\n[DONE] All real datasets verified.")
+

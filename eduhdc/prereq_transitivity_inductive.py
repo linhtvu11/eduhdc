@@ -36,7 +36,7 @@ from eduhdc.models import EduHDC_PrereqProbe
 from eduhdc.prereq_transitivity_v7 import load_clean_junyi, wilson_ci
 from sentence_transformers import SentenceTransformer
 
-RESULTS_DIR = str(src_dir.parent / "data" / "results")
+RESULTS_DIR = str(src_dir / "results")
 TEST_NODE_FRAC = 0.35
 MAX_TEST_PER_STRATUM = 1500
 PER_STRATUM_TRAIN = 2500
@@ -197,3 +197,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

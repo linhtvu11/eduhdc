@@ -37,10 +37,10 @@ if str(src_dir) not in sys.path:
 from eduhdc.models import EduHDC_KT, DKT_Baseline, SAKT_Baseline, SimpleKT_Baseline, AKT_Baseline
 from eduhdc.data_loader_real import load_assistments_real
 
-DATA_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "assistments" / \
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "assistments" / \
             "2012-2013-data-with-predictions-4-final.csv"
 
-RESULTS_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "results")
+RESULTS_DIR = str(Path(__file__).resolve().parent.parent / "results")
 
 
 # ==============================================================================
@@ -340,3 +340,4 @@ def run_rigorous_kt_benchmark():
 
 if __name__ == "__main__":
     run_rigorous_kt_benchmark()
+

@@ -37,7 +37,7 @@ if str(src_dir) not in sys.path:
 
 from eduhdc.operators import BipolarMAP, RealHRR, EduBindBlockDiag
 
-RESULTS_DIR = str(Path(__file__).resolve().parent.parent.parent / "data" / "results")
+RESULTS_DIR = str(Path(__file__).resolve().parent.parent / "results")
 
 
 def _make_op(op_type, dim, device):
@@ -181,3 +181,4 @@ def run_precision_eval():
 
 if __name__ == "__main__":
     run_precision_eval()
+

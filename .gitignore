@@ -2,3 +2,7 @@
 *.olean
 *.ilean
 *.trace
+
+__pycache__/
+data/
+
