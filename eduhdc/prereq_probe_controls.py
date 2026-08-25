@@ -22,6 +22,37 @@ Addresses three audit findings at once:
         hrr      - commutative circular convolution (negative control)
         concat   - an order-sensitive NON-VSA control: an MLP on [u ; v]
 
+  D3  (2026-08-25) Neither tier had a validation split; the epoch budget was
+      fixed by hand and an earlier 100-vs-160-epoch comparison had been made on
+      test data. Each arm now holds out VAL_FRAC of its training pool as an
+      internal validation set and early-stops on validation direction accuracy
+      (patience=PATIENCE, same pattern as kt_experiment_rigorous.py's D3 fix).
+      MAP and HRR bind is provably commutative AND associative, so their
+      encode_relation(u,v) == encode_relation(v,u) exactly (elementwise product
+      / circular convolution do not care about argument order at all): their
+      validation accuracy is flat at 0.0 from epoch 1, so early stopping exits
+      after MIN_EPOCHS + PATIENCE epochs for those two arms regardless of the
+      data — this is the algebraic tie, not an artifact of the new stopping rule.
+
+      The first D3 implementation split 15% of the POOLED training set at random
+      and used the pooled validation accuracy as the stopping criterion. That is
+      wrong here: MAX_TEST_TRANS=2000 is drawn from the hop2-3 pool BEFORE the
+      training pool is built, and the hop2-3 pool is only ~2,187 pairs total, so
+      only ~187 pairs remain for hop2-3 training (versus 2,500 each for hop4-6
+      and hop7+, capped down from much larger pools). A flat 15% pooled split
+      then puts only ~3% of the validation set in hop2-3, so the stopping
+      decision is driven almost entirely by hop4-6/hop7+/direct-edge signal,
+      which saturates early -- and training stops before the hop2-3 weights
+      finish improving. This showed up exactly as predicted: transductive
+      hop2-3 accuracy dropped ~8 points while hop7+ was essentially unchanged.
+      Fixed by splitting the validation set INDEPENDENTLY per hop stratum and
+      averaging the three per-stratum validation accuracies UNWEIGHTED for the
+      stopping decision, so hop2-3's signal counts as much as hop7+'s despite
+      having roughly 13x fewer training pairs. The "direct" (G.edges) and
+      "expert" (bidirectional-annotation) categories are not part of this
+      criterion and are not held out at all -- they exist to augment training
+      signal, not to be evaluated per-stratum.
+
 Reported per arm and per hop stratum: mean direction accuracy over seeds, a
 percentile bootstrap 95% interval over seeds, and the win/loss/tie decomposition
 of the pairwise comparison. The tie count matters for the commutative arms: their
@@ -60,7 +91,10 @@ PER_STRATUM_TRAIN = 2500
 TEST_NODE_FRAC = 0.35
 N_SEEDS = 10
 N_BOOTSTRAP = 2000
-EPOCHS = 100
+MAX_EPOCHS = 200      # early stopping cuts this short in practice
+VAL_FRAC = 0.15
+PATIENCE = 5
+MIN_EPOCHS = 15
 ARMS = ["edubind", "map", "hrr", "concat"]
 STRATA = ["hop2-3", "hop4-6", "hop7+"]
 BOUNDS = {"hop2-3": (2, 3), "hop4-6": (4, 6), "hop7+": (7, 10 ** 9)}
@@ -102,19 +136,70 @@ def bootstrap_ci(vals, n_boot=N_BOOTSTRAP, seed=0):
     return float(lo), float(hi)
 
 
-def train_eval(arm, emb_dim, device, tr_pairs, strata_t, seed, epochs=EPOCHS):
-    """Train one probe and return per-stratum (wins, ties, n)."""
+def train_eval(arm, emb_dim, device, tr_by_cat, strata_t, seed,
+                max_epochs=MAX_EPOCHS, val_frac=VAL_FRAC,
+                patience=PATIENCE, min_epochs=MIN_EPOCHS):
+    """Train one probe with a PER-STRATUM validation split + early stopping,
+    then return per-stratum (wins, ties, n) on the held-out test strata.
+
+    tr_by_cat: {category -> (Xu, Xv)} for the training pool, category in
+    STRATA ("hop2-3"/"hop4-6"/"hop7+") plus "direct" and "expert" augmentation
+    pairs. Only the STRATA categories are held out for validation, split
+    INDEPENDENTLY per category so a small stratum (e.g. hop2-3, ~13x fewer
+    pairs than hop4-6/hop7+ after test-set extraction) is not drowned out by
+    the larger ones; the stopping criterion is the unweighted mean of the
+    per-stratum validation accuracies. "direct"/"expert" are never held out.
+    """
     torch.manual_seed(31 + seed * 7)
     probe = make_probe(arm, emb_dim, device)
     opt = optim.Adam(probe.parameters(), lr=0.01, weight_decay=1e-4)
-    Xu, Xv = tr_pairs
-    for _ in range(epochs):
+
+    tr_u_parts, tr_v_parts = [], []
+    val_by_cat = {}
+    for ci, cat in enumerate(sorted(tr_by_cat.keys())):
+        Xu, Xv = tr_by_cat[cat]
+        n = Xu.shape[0]
+        if n == 0:
+            continue
+        if cat in STRATA and n >= 4:
+            g = torch.Generator().manual_seed(500 + seed * 13 + ARMS.index(arm) * 97 + ci * 7919)
+            perm = torch.randperm(n, generator=g).to(device)
+            n_val = max(1, min(int(round(n * val_frac)), n - 1))
+            val_idx, tr_idx = perm[:n_val], perm[n_val:]
+            val_by_cat[cat] = (Xu[val_idx], Xv[val_idx])
+            tr_u_parts.append(Xu[tr_idx]); tr_v_parts.append(Xv[tr_idx])
+        else:
+            tr_u_parts.append(Xu); tr_v_parts.append(Xv)
+    Xu_tr = torch.cat(tr_u_parts, dim=0)
+    Xv_tr = torch.cat(tr_v_parts, dim=0)
+
+    best_val, best_state, bad = -1.0, None, 0
+    for ep in range(max_epochs):
+        probe.train()
         opt.zero_grad()
-        fs = probe(Xu, Xv)
-        rs = probe(Xv, Xu)
+        fs = probe(Xu_tr, Xv_tr)
+        rs = probe(Xv_tr, Xu_tr)
         loss = F.margin_ranking_loss(fs, rs, torch.ones_like(fs), margin=0.5)
         loss.backward()
         opt.step()
+
+        probe.eval()
+        with torch.no_grad():
+            cat_accs = []
+            for Au, Av in val_by_cat.values():
+                vf = probe(Au, Av)
+                vr = probe(Av, Au)
+                cat_accs.append((vf > vr).float().mean().item())
+            val_acc = float(np.mean(cat_accs)) if cat_accs else 0.0
+        if val_acc > best_val + 1e-4:
+            best_val, bad = val_acc, 0
+            best_state = {k: v.detach().clone() for k, v in probe.state_dict().items()}
+        else:
+            bad += 1
+            if ep + 1 >= min_epochs and bad >= patience:
+                break
+    if best_state is not None:
+        probe.load_state_dict(best_state)
     probe.eval()
     out = {}
     with torch.no_grad():
@@ -185,11 +270,19 @@ def main():
     print(f"transitive pairs available (expert pairs excluded): {len(ap)}", flush=True)
 
     results = {"protocol": {
-        "n_seeds": N_SEEDS, "epochs": EPOCHS, "arms": ARMS,
+        "n_seeds": N_SEEDS, "max_epochs": MAX_EPOCHS, "arms": ARMS,
         "ci": "percentile bootstrap over seeds (NOT a pooled binomial interval)",
         "transductive": "test pairs held out; every seed redraws the test subsample",
         "inductive": ("node split redrawn INSIDE the seed loop, so each seed is an "
                       "independent (split, init) draw; both nodes of every test pair unseen"),
+        "validation": (f"D3 fix: {int(VAL_FRAC*100)}% held out INDEPENDENTLY per hop stratum "
+                        f"(hop2-3/hop4-6/hop7+) from the training pool, NOT a single pooled split "
+                        f"-- a pooled split let the ~13x-larger hop4-6/hop7+ pools drown out "
+                        f"hop2-3's stopping signal. Early-stops on the unweighted mean of the "
+                        f"three per-stratum validation accuracies, patience={PATIENCE} after at "
+                        f"least {MIN_EPOCHS} epochs, restoring the best-validation checkpoint "
+                        f"before test evaluation. 'direct'/'expert' augmentation pairs are never "
+                        f"held out. Test strata are never used for the stopping decision."),
         "note": ("dir_acc_strict uses f(u,v) > f(v,u); commutative arms tie exactly, so "
                  "dir_acc_tiebreak = (wins + ties/2)/n is also reported"),
     }}
@@ -213,10 +306,12 @@ def main():
         test_set = set()
         for v in strata.values():
             test_set.update(v)
-        tr = [(u, v) for u, v in G.edges]
+        tr_by_cat = {"direct": [(u, v) for u, v in G.edges]}
+        expert_pairs = []
         for a, b, sab, sba in ann.bidirectional_pairs(ann.train_rows):
             if abs(sab - sba) >= 1.0 and frozenset((a, b)) not in test_set:
-                tr.append((a, b) if sab > sba else (b, a))
+                expert_pairs.append((a, b) if sab > sba else (b, a))
+        tr_by_cat["expert"] = expert_pairs
         for k in STRATA:
             lo, hi = BOUNDS[k]
             pool = [(u, v) for (u, v), d in ap.items()
@@ -224,7 +319,8 @@ def main():
             if len(pool) > PER_STRATUM_TRAIN:
                 idx = sorted(rng.choice(len(pool), PER_STRATUM_TRAIN, replace=False))
                 pool = [pool[i] for i in idx]
-            tr.extend(pool)
+            tr_by_cat[k] = pool
+        tr = [p for pairs in tr_by_cat.values() for p in pairs]
         assert not (set(tr) & test_set), "pair leakage"
         trn, ten = set(), set()
         for p in tr:
@@ -232,10 +328,10 @@ def main():
         for p in test_set:
             ten.update(p)
         node_overlap.append(len(ten & trn) / max(1, len(ten)))
-        tr_t = to_tensors(tr, ex_to_dense, device)
+        tr_by_cat_t = {c: to_tensors(p, ex_to_dense, device) for c, p in tr_by_cat.items() if p}
         st_t = {k: to_tensors(p, ex_to_dense, device) for k, p in strata.items() if p}
         for arm in ARMS:
-            out = train_eval(arm, emb_dim, device, tr_t, st_t, seed)
+            out = train_eval(arm, emb_dim, device, tr_by_cat_t, st_t, seed)
             for k in STRATA:
                 trans[arm][k].append(out[k])
         print(f"  seed {seed}: train={len(tr)} test={len(test_set)} "
@@ -265,10 +361,13 @@ def main():
             if len(strata[k]) > MAX_TEST_IND:
                 idx = sorted(rng.choice(len(strata[k]), MAX_TEST_IND, replace=False))
                 strata[k] = [strata[k][i] for i in idx]
-        tr = [(u, v) for u, v in G.edges if u in train_nodes and v in train_nodes]
+        tr_by_cat = {"direct": [(u, v) for u, v in G.edges
+                                 if u in train_nodes and v in train_nodes]}
+        expert_pairs = []
         for a, b, sab, sba in ann.bidirectional_pairs(ann.train_rows):
             if abs(sab - sba) >= 1.0 and a in train_nodes and b in train_nodes:
-                tr.append((a, b) if sab > sba else (b, a))
+                expert_pairs.append((a, b) if sab > sba else (b, a))
+        tr_by_cat["expert"] = expert_pairs
         for k in STRATA:
             lo, hi = BOUNDS[k]
             pool = [(u, v) for (u, v), d in ap.items()
@@ -276,7 +375,8 @@ def main():
             if len(pool) > PER_STRATUM_TRAIN:
                 idx = sorted(rng.choice(len(pool), PER_STRATUM_TRAIN, replace=False))
                 pool = [pool[i] for i in idx]
-            tr.extend(pool)
+            tr_by_cat[k] = pool
+        tr = [p for pairs in tr_by_cat.values() for p in pairs]
         trn, ten = set(), set()
         for p in tr:
             trn.update(p)
@@ -284,10 +384,10 @@ def main():
             for p in strata[k]:
                 ten.update(p)
         assert not (trn & ten), "node leakage"
-        tr_t = to_tensors(tr, ex_to_dense, device)
+        tr_by_cat_t = {c: to_tensors(p, ex_to_dense, device) for c, p in tr_by_cat.items() if p}
         st_t = {k: to_tensors(p, ex_to_dense, device) for k, p in strata.items() if p}
         for arm in ARMS:
-            out = train_eval(arm, emb_dim, device, tr_t, st_t, seed, epochs=120)
+            out = train_eval(arm, emb_dim, device, tr_by_cat_t, st_t, seed)
             for k in STRATA:
                 if k in out:
                     ind[arm][k].append(out[k])
