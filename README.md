@@ -3,7 +3,7 @@
 Release artifact accompanying the paper:
 
 > **EDUHDC: Machine-Checked Order-Sensitive Binding for Vector-Symbolic Curriculum Representations in Lean 4**
-> Vu Linh Nguyen-Van — Tra Vinh University, Tra Vinh, Vietnam
+> Vu Linh Nguyen-Van, Thai Son Nguyen, Bao-An Nguyen — Tra Vinh University, Tra Vinh, Vietnam
 
 This repository contains everything needed to re-check the machine-verified claims and
 re-run the empirical evaluations reported in the paper.

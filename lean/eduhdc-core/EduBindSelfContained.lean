@@ -236,3 +236,6 @@ def edubindVSA : PedagogicalVSA (Matrix2 Int) where
   order_sensitive_ax := by
     obtain ⟨Y, hY⟩ := lmul_Rot_Ref_non_comm
     exact ⟨0, 1, Y, hY⟩
+
+-- xem main.tex §3 lời mời người đọc chạy lệnh này
+#print axioms edubindVSA
