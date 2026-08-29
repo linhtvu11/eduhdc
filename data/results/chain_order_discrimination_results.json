@@ -1,0 +1,184 @@
+{
+  "config": {
+    "D": 2048,
+    "K": 2000,
+    "n_trials": 30,
+    "n_list": [
+      2,
+      3,
+      4,
+      8,
+      16,
+      24,
+      32,
+      41
+    ],
+    "ops": [
+      "map",
+      "hrr",
+      "edubind"
+    ]
+  },
+  "forward_accuracy": {
+    "map": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 1.0,
+      "24": 1.0,
+      "32": 1.0,
+      "41": 1.0
+    },
+    "hrr": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 0.0,
+      "24": 0.0,
+      "32": 0.06666667014360428,
+      "41": 0.0
+    },
+    "edubind": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 1.0,
+      "24": 1.0,
+      "32": 1.0,
+      "41": 1.0
+    }
+  },
+  "reversed_accuracy": {
+    "map": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 1.0,
+      "24": 1.0,
+      "32": 1.0,
+      "41": 1.0
+    },
+    "hrr": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 0.0,
+      "24": 0.0,
+      "32": 0.06666667014360428,
+      "41": 0.0
+    },
+    "edubind": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 0.0,
+      "16": 0.0,
+      "24": 0.0,
+      "32": 0.0,
+      "41": 0.0
+    }
+  },
+  "discrimination_accuracy": {
+    "map": {
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0,
+      "8": 0.0,
+      "16": 0.0,
+      "24": 0.0,
+      "32": 0.0,
+      "41": 0.0
+    },
+    "hrr": {
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0,
+      "8": 0.0,
+      "16": 0.0,
+      "24": 0.0,
+      "32": 0.0,
+      "41": 0.0
+    },
+    "edubind": {
+      "2": 0.0,
+      "3": 0.0,
+      "4": 0.0,
+      "8": 1.0,
+      "16": 1.0,
+      "24": 1.0,
+      "32": 1.0,
+      "41": 1.0
+    }
+  },
+  "forward_cosine_to_target": {
+    "map": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 1.0,
+      "24": 1.0,
+      "32": 1.0,
+      "41": 1.0
+    },
+    "hrr": {
+      "2": 0.51385098695755,
+      "3": 0.38617727160453796,
+      "4": 0.2354164868593216,
+      "8": 0.16478045284748077,
+      "16": 0.03491632267832756,
+      "24": 0.033788442611694336,
+      "32": 0.036419376730918884,
+      "41": 0.04313311725854874
+    },
+    "edubind": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 1.0,
+      "24": 1.0,
+      "32": 1.0,
+      "41": 1.0
+    }
+  },
+  "reversed_cosine_to_target": {
+    "map": {
+      "2": 1.0,
+      "3": 1.0,
+      "4": 1.0,
+      "8": 1.0,
+      "16": 1.0,
+      "24": 1.0,
+      "32": 1.0,
+      "41": 1.0
+    },
+    "hrr": {
+      "2": 0.5138509273529053,
+      "3": 0.38617727160453796,
+      "4": 0.2354164868593216,
+      "8": 0.16478045284748077,
+      "16": 0.03491633012890816,
+      "24": 0.03378845378756523,
+      "32": 0.03641936928033829,
+      "41": 0.04313310980796814
+    },
+    "edubind": {
+      "2": 0.2494886815547943,
+      "3": 0.2616668939590454,
+      "4": 0.11616716533899307,
+      "8": 0.0581369586288929,
+      "16": 0.03309246152639389,
+      "24": -0.028719542548060417,
+      "32": 0.010479003190994263,
+      "41": -0.031897105276584625
+    }
+  },
+  "elapsed_sec": 0.7045432000886649,
+  "note": "Runtime counterpart of ChainOrder.lean. `forward` binds a content through a chain of n independently-sampled relations and unbinds through the SAME chain in reverse -- exactness there follows from a left inverse alone and does not test order sensitivity. `reversed` unbinds through the chain in the WRONG order: an order-blind (abelian-label) operator still recovers the content, which is the failure mode abelian_chain_order_blind proves. `discrimination` is the fraction of trials where forward recovers and reversed does not, i.e. what the order-sensitivity axiom actually buys. Cosine to the TRUE target is reported alongside top-1 because top-1 against a 2,000-entry codebook is generous: at n=2,3,4 the verified operator's reversed residue sits at cosine 0.08-0.26 to the target yet still wins argmax, so its top-1 'recovery' at short lengths is a readout artifact rather than genuine order blindness. Same operator implementations, dimension and codebook as chain_length_separation.py, and the identical top-1 readout."
+}

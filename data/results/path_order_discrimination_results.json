@@ -1,0 +1,164 @@
+{
+  "config": {
+    "D": 2048,
+    "n_seeds": 3,
+    "strata": [
+      [
+        "hop2-3",
+        2,
+        3
+      ],
+      [
+        "hop4-6",
+        4,
+        6
+      ],
+      [
+        "hop7+",
+        7,
+        1000000000
+      ]
+    ],
+    "max_paths_per_stratum": 600,
+    "note": "Training-free, readout-free. Content = fixed random carrier basis; keys = fixed per-node group element drawn deterministically from the node name via op.random_vector (identical across operators and seeds). measure(sim(rec_true, enc_a) - sim(rec_rev, enc_a)); rec_true = unbind in the forward-bind order, rec_rev = unbind in the reverse order. Prediction under chain_exact_unbind/abelian_chainAct_reverse/chain_order_sensitive: EduBind margin >> 0 (DirAcc >> 0.5), MAP & HRR margin ~0 (DirAcc ~0.5)."
+  },
+  "results": {
+    "edubind": {
+      "dir_acc_mean": 1.0,
+      "dir_acc_per_seed": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "mean_margin_mean": 0.9023568223263309,
+      "mean_margin_per_seed": [
+        0.9017259517277125,
+        0.9024981177326602,
+        0.9028463975186201
+      ],
+      "margin_std_overall": 0.11487481970329182,
+      "frac_margin_positive": 1.0,
+      "frac_margin_gt_0.05": 1.0,
+      "dir_acc_strict_mean": 1.0,
+      "tie_fraction_mean": 0.0,
+      "rho_recovery_mean": 1.0000000351777785,
+      "rho_recovery_per_seed": [
+        1.000000036292606,
+        1.0000000334779422,
+        1.000000035762787
+      ],
+      "strata": {
+        "hop2-3": {
+          "n": 600,
+          "mean_margin": 0.753047083094716,
+          "frac_positive": 1.0,
+          "rho_recovery": 1.0000000395377477
+        },
+        "hop4-6": {
+          "n": 600,
+          "mean_margin": 0.9536027557142855,
+          "frac_positive": 1.0,
+          "rho_recovery": 1.0000000336766244
+        },
+        "hop7+": {
+          "n": 600,
+          "mean_margin": 0.998528016374136,
+          "frac_positive": 1.0,
+          "rho_recovery": 1.0000000356634458
+        }
+      }
+    },
+    "map": {
+      "dir_acc_mean": 0.5,
+      "dir_acc_per_seed": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "mean_margin_mean": 0.0,
+      "mean_margin_per_seed": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "margin_std_overall": 0.0,
+      "frac_margin_positive": 0.0,
+      "frac_margin_gt_0.05": 0.0,
+      "dir_acc_strict_mean": 0.0,
+      "tie_fraction_mean": 1.0,
+      "rho_recovery_mean": 1.0000000434562013,
+      "rho_recovery_per_seed": [
+        1.000000043710073,
+        1.0000000432133676,
+        1.0000000434451632
+      ],
+      "strata": {
+        "hop2-3": {
+          "n": 600,
+          "mean_margin": 0.0,
+          "frac_positive": 0.0,
+          "rho_recovery": 1.0000000459949177
+        },
+        "hop4-6": {
+          "n": 600,
+          "mean_margin": 0.0,
+          "frac_positive": 0.0,
+          "rho_recovery": 1.0000000435113907
+        },
+        "hop7+": {
+          "n": 600,
+          "mean_margin": 0.0,
+          "frac_positive": 0.0,
+          "rho_recovery": 1.0000000416239103
+        }
+      }
+    },
+    "hrr": {
+      "dir_acc_mean": 0.4950925925925926,
+      "dir_acc_per_seed": [
+        0.4936111111111111,
+        0.4916666666666667,
+        0.5
+      ],
+      "mean_margin_mean": -3.83394459883372e-10,
+      "mean_margin_per_seed": [
+        -4.873921473821004e-10,
+        -4.6048727300431995e-10,
+        -2.0230395926369562e-10
+      ],
+      "margin_std_overall": 2.7602044498281685e-08,
+      "frac_margin_positive": 0.29074074074074074,
+      "frac_margin_gt_0.05": 0.0,
+      "dir_acc_strict_mean": 0.29074074074074074,
+      "tie_fraction_mean": 0.40870370370370374,
+      "rho_recovery_mean": 0.24670216334035136,
+      "rho_recovery_per_seed": [
+        0.24649874158410562,
+        0.24687254638307624,
+        0.24673520205387225
+      ],
+      "strata": {
+        "hop2-3": {
+          "n": 600,
+          "mean_margin": 9.934107462565105e-11,
+          "frac_positive": 0.18666666666666668,
+          "rho_recovery": 0.4221644863237937
+        },
+        "hop4-6": {
+          "n": 600,
+          "mean_margin": 1.8626451492309571e-10,
+          "frac_positive": 0.2633333333333333,
+          "rho_recovery": 0.22958992533385753
+        },
+        "hop7+": {
+          "n": 600,
+          "mean_margin": -1.747782031695048e-09,
+          "frac_positive": 0.3983333333333333,
+          "rho_recovery": 0.08774181309466561
+        }
+      }
+    }
+  },
+  "tot_paths": 1800,
+  "elapsed_sec": 141.05683040013537
+}

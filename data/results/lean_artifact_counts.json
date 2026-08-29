@@ -1,0 +1,77 @@
+{
+  "kernel": {
+    "files": 11,
+    "theorems": 127,
+    "lines": 1050,
+    "per_file": {
+      "CapacityCostModel.lean": {
+        "theorems": 11,
+        "lines": 43
+      },
+      "ChainCrosstalk.lean": {
+        "theorems": 8,
+        "lines": 88
+      },
+      "ChainOrder.lean": {
+        "theorems": 12,
+        "lines": 133
+      },
+      "ChainTransitivity.lean": {
+        "theorems": 8,
+        "lines": 49
+      },
+      "DihedralLabel.lean": {
+        "theorems": 11,
+        "lines": 118
+      },
+      "EduBindSelfContained.lean": {
+        "theorems": 13,
+        "lines": 103
+      },
+      "EncPairSpec.lean": {
+        "theorems": 13,
+        "lines": 119
+      },
+      "GroupActionSpec.lean": {
+        "theorems": 7,
+        "lines": 78
+      },
+      "MonoidRelaxation.lean": {
+        "theorems": 8,
+        "lines": 103
+      },
+      "SpecStrengthening.lean": {
+        "theorems": 17,
+        "lines": 112
+      },
+      "VSATriad.lean": {
+        "theorems": 19,
+        "lines": 104
+      }
+    }
+  },
+  "mathlib": {
+    "files": 3,
+    "theorems": 38,
+    "lines": 341,
+    "per_file": {
+      "Basic.lean": {
+        "theorems": 6,
+        "lines": 68
+      },
+      "EduBindBlockDiag.lean": {
+        "theorems": 9,
+        "lines": 53
+      },
+      "GroupActionReal.lean": {
+        "theorems": 23,
+        "lines": 220
+      }
+    }
+  },
+  "total": {
+    "files": 14,
+    "theorems": 165,
+    "lines": 1391
+  }
+}

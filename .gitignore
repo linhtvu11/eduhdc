@@ -1,8 +1,22 @@
+
+# build output
 .lake/
 *.olean
 *.ilean
 *.trace
 
-__pycache__/
-data/
+# LaTeX byproducts
+*.aux
+*.log
+*.out
+*.blg
+*.bbl
+*.synctex.gz
 
+__pycache__/
+*.pyc
+
+# third-party datasets are not redistributed
+data/junyi/
+data/assistments/
+data/raw/

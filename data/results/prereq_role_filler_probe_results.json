@@ -1,0 +1,533 @@
+{
+  "protocol": {
+    "note": "IDENTICAL protocol/data/splits/seeds to prereq_probe_controls.py (same source functions, imported not duplicated); ONLY the probe's encode_relation is swapped for a true role-filler construction (bundle(bind(u,role_P), bind(v,role_A))) instead of the original's nested bind(bind(u,role_P), bind(v,role_A)). concat-MLP is not run here since it contains no VSA bind and is unaffected by the swap; its Table-1 numbers apply unchanged.",
+    "n_seeds": 10,
+    "arms": [
+      "edubind",
+      "map",
+      "hrr"
+    ],
+    "prediction_under_H0": "MAP should no longer tie at 0.0% strict direction accuracy; a commutative operator with two distinct roles bundled (not bound) together should recover a meaningful fraction of direction accuracy."
+  },
+  "transductive": {
+    "edubind": {
+      "hop2-3": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.78135,
+        "dir_acc_strict_sd": 0.04245392927764297,
+        "bootstrap_ci95_strict": [
+          0.7554000000000001,
+          0.8054025
+        ],
+        "dir_acc_tiebreak": 0.78135,
+        "bootstrap_ci95_tiebreak": [
+          0.7554000000000001,
+          0.8054025
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.7235,
+          0.8265,
+          0.7545,
+          0.7615,
+          0.8095,
+          0.7285,
+          0.805,
+          0.8365,
+          0.8195,
+          0.7485
+        ]
+      },
+      "hop4-6": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.9003,
+        "dir_acc_strict_sd": 0.02717964924963773,
+        "bootstrap_ci95_strict": [
+          0.8838000000000001,
+          0.9166512499999999
+        ],
+        "dir_acc_tiebreak": 0.9003,
+        "bootstrap_ci95_tiebreak": [
+          0.8838000000000001,
+          0.9166512499999999
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.875,
+          0.9245,
+          0.887,
+          0.8815,
+          0.9275,
+          0.8615,
+          0.914,
+          0.946,
+          0.9045,
+          0.8815
+        ]
+      },
+      "hop7+": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.9803000000000001,
+        "dir_acc_strict_sd": 0.009795690662508485,
+        "bootstrap_ci95_strict": [
+          0.97419625,
+          0.9856525
+        ],
+        "dir_acc_tiebreak": 0.9803000000000001,
+        "bootstrap_ci95_tiebreak": [
+          0.97419625,
+          0.9856525
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.9695,
+          0.9885,
+          0.9745,
+          0.982,
+          0.9915,
+          0.961,
+          0.9825,
+          0.9895,
+          0.987,
+          0.977
+        ]
+      }
+    },
+    "map": {
+      "hop2-3": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.80535,
+        "dir_acc_strict_sd": 0.03910814777283912,
+        "bootstrap_ci95_strict": [
+          0.7838,
+          0.8275512499999998
+        ],
+        "dir_acc_tiebreak": 0.80535,
+        "bootstrap_ci95_tiebreak": [
+          0.7838,
+          0.8275512499999998
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.8295,
+          0.779,
+          0.8095,
+          0.7485,
+          0.777,
+          0.789,
+          0.8515,
+          0.871,
+          0.828,
+          0.7705
+        ]
+      },
+      "hop4-6": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.9171999999999999,
+        "dir_acc_strict_sd": 0.03167561277141209,
+        "bootstrap_ci95_strict": [
+          0.8995987499999999,
+          0.9355025
+        ],
+        "dir_acc_tiebreak": 0.9171999999999999,
+        "bootstrap_ci95_tiebreak": [
+          0.8995987499999999,
+          0.9355025
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.9395,
+          0.901,
+          0.926,
+          0.8745,
+          0.8905,
+          0.9025,
+          0.949,
+          0.9735,
+          0.931,
+          0.8845
+        ]
+      },
+      "hop7+": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.9851000000000001,
+        "dir_acc_strict_sd": 0.011527262371342904,
+        "bootstrap_ci95_strict": [
+          0.97829875,
+          0.9914999999999999
+        ],
+        "dir_acc_tiebreak": 0.9851000000000001,
+        "bootstrap_ci95_tiebreak": [
+          0.97829875,
+          0.9914999999999999
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.993,
+          0.98,
+          0.992,
+          0.964,
+          0.9805,
+          0.989,
+          0.9945,
+          0.9985,
+          0.991,
+          0.9685
+        ]
+      }
+    },
+    "hrr": {
+      "hop2-3": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.8165000000000001,
+        "dir_acc_strict_sd": 0.03349709771839281,
+        "bootstrap_ci95_strict": [
+          0.79604625,
+          0.8355524999999999
+        ],
+        "dir_acc_tiebreak": 0.8165000000000001,
+        "bootstrap_ci95_tiebreak": [
+          0.79604625,
+          0.8355524999999999
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.7565,
+          0.858,
+          0.7865,
+          0.837,
+          0.835,
+          0.8535,
+          0.809,
+          0.836,
+          0.7805,
+          0.813
+        ]
+      },
+      "hop4-6": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.92445,
+        "dir_acc_strict_sd": 0.029146612153044503,
+        "bootstrap_ci95_strict": [
+          0.9070475000000001,
+          0.94155125
+        ],
+        "dir_acc_tiebreak": 0.92445,
+        "bootstrap_ci95_tiebreak": [
+          0.9070475000000001,
+          0.94155125
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.8825,
+          0.9655,
+          0.894,
+          0.9415,
+          0.937,
+          0.9625,
+          0.9145,
+          0.937,
+          0.8915,
+          0.9185
+        ]
+      },
+      "hop7+": {
+        "n_pairs_mean": 2000.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.9881,
+        "dir_acc_strict_sd": 0.007097730466689889,
+        "bootstrap_ci95_strict": [
+          0.98375,
+          0.9921999999999999
+        ],
+        "dir_acc_tiebreak": 0.9881,
+        "bootstrap_ci95_tiebreak": [
+          0.98375,
+          0.9921999999999999
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.9775,
+          0.9955,
+          0.9795,
+          0.9935,
+          0.994,
+          0.9965,
+          0.9865,
+          0.991,
+          0.98,
+          0.987
+        ]
+      }
+    }
+  },
+  "transductive_test_node_overlap_mean": 1.0,
+  "inductive": {
+    "edubind": {
+      "hop2-3": {
+        "n_pairs_mean": 257.2,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.6705576957395236,
+        "dir_acc_strict_sd": 0.03592381735984607,
+        "bootstrap_ci95_strict": [
+          0.6496589225360923,
+          0.6905812211680705
+        ],
+        "dir_acc_tiebreak": 0.6705576957395236,
+        "bootstrap_ci95_tiebreak": [
+          0.6496589225360923,
+          0.6905812211680705
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.7065217391304348,
+          0.6389891696750902,
+          0.6862068965517242,
+          0.6486486486486487,
+          0.6173469387755102,
+          0.7022900763358778,
+          0.6296296296296297,
+          0.7035573122529645,
+          0.7136563876651982,
+          0.6587301587301587
+        ]
+      },
+      "hop4-6": {
+        "n_pairs_mean": 666.9,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.7785220778311175,
+        "dir_acc_strict_sd": 0.03599961925408844,
+        "bootstrap_ci95_strict": [
+          0.7580856016763033,
+          0.7996747662256665
+        ],
+        "dir_acc_tiebreak": 0.7785220778311175,
+        "bootstrap_ci95_tiebreak": [
+          0.7580856016763033,
+          0.7996747662256665
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.8143074581430746,
+          0.7349768875192604,
+          0.7712691771269177,
+          0.7454798331015299,
+          0.7715736040609137,
+          0.7910216718266254,
+          0.7234957020057307,
+          0.8126843657817109,
+          0.8318318318318318,
+          0.7885802469135802
+        ]
+      },
+      "hop7+": {
+        "n_pairs_mean": 1500.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.9234,
+        "dir_acc_strict_sd": 0.01959705193248322,
+        "bootstrap_ci95_strict": [
+          0.9126000000000001,
+          0.9345333333333332
+        ],
+        "dir_acc_tiebreak": 0.9234,
+        "bootstrap_ci95_tiebreak": [
+          0.9126000000000001,
+          0.9345333333333332
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.9193333333333333,
+          0.9193333333333333,
+          0.9366666666666666,
+          0.9173333333333333,
+          0.8933333333333333,
+          0.9153333333333333,
+          0.8973333333333333,
+          0.9546666666666667,
+          0.938,
+          0.9426666666666667
+        ]
+      }
+    },
+    "map": {
+      "hop2-3": {
+        "n_pairs_mean": 257.2,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.6876505955651774,
+        "dir_acc_strict_sd": 0.028268588789808684,
+        "bootstrap_ci95_strict": [
+          0.6715672914132418,
+          0.704301519297708
+        ],
+        "dir_acc_tiebreak": 0.6876505955651774,
+        "bootstrap_ci95_tiebreak": [
+          0.6715672914132418,
+          0.704301519297708
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.7355072463768116,
+          0.6606498194945848,
+          0.6862068965517242,
+          0.6824324324324325,
+          0.6581632653061225,
+          0.6908396946564885,
+          0.6502057613168725,
+          0.7114624505928854,
+          0.7224669603524229,
+          0.6785714285714286
+        ]
+      },
+      "hop4-6": {
+        "n_pairs_mean": 666.9,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.7785380960402959,
+        "dir_acc_strict_sd": 0.0374038152662267,
+        "bootstrap_ci95_strict": [
+          0.7574241526170298,
+          0.8003431765536034
+        ],
+        "dir_acc_tiebreak": 0.7785380960402959,
+        "bootstrap_ci95_tiebreak": [
+          0.7574241526170298,
+          0.8003431765536034
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.8203957382039574,
+          0.7272727272727273,
+          0.7545327754532776,
+          0.7454798331015299,
+          0.8003384094754653,
+          0.7925696594427245,
+          0.7335243553008596,
+          0.827433628318584,
+          0.8153153153153153,
+          0.7685185185185185
+        ]
+      },
+      "hop7+": {
+        "n_pairs_mean": 1500.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.9345333333333334,
+        "dir_acc_strict_sd": 0.01821354807096447,
+        "bootstrap_ci95_strict": [
+          0.9246666666666666,
+          0.9456033333333334
+        ],
+        "dir_acc_tiebreak": 0.9345333333333334,
+        "bootstrap_ci95_tiebreak": [
+          0.9246666666666666,
+          0.9456033333333334
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.944,
+          0.9246666666666666,
+          0.9153333333333333,
+          0.9226666666666666,
+          0.938,
+          0.9193333333333333,
+          0.9193333333333333,
+          0.9733333333333334,
+          0.952,
+          0.9366666666666666
+        ]
+      }
+    },
+    "hrr": {
+      "hop2-3": {
+        "n_pairs_mean": 257.2,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.6905027148510023,
+        "dir_acc_strict_sd": 0.02793347185381649,
+        "bootstrap_ci95_strict": [
+          0.6734914745123363,
+          0.7058416362803714
+        ],
+        "dir_acc_tiebreak": 0.6905027148510023,
+        "bootstrap_ci95_tiebreak": [
+          0.6734914745123363,
+          0.7058416362803714
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.7028985507246377,
+          0.6895306859205776,
+          0.696551724137931,
+          0.6925675675675675,
+          0.6887755102040817,
+          0.6603053435114504,
+          0.6337448559670782,
+          0.7272727272727273,
+          0.7268722466960352,
+          0.6865079365079365
+        ]
+      },
+      "hop4-6": {
+        "n_pairs_mean": 666.9,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.786685123585299,
+        "dir_acc_strict_sd": 0.038807360948037134,
+        "bootstrap_ci95_strict": [
+          0.7644462788801597,
+          0.8083715354058757
+        ],
+        "dir_acc_tiebreak": 0.786685123585299,
+        "bootstrap_ci95_tiebreak": [
+          0.7644462788801597,
+          0.8083715354058757
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.8158295281582952,
+          0.7411402157164869,
+          0.7587168758716876,
+          0.7510431154381085,
+          0.8291032148900169,
+          0.8065015479876161,
+          0.7234957020057307,
+          0.8126843657817109,
+          0.8243243243243243,
+          0.8040123456790124
+        ]
+      },
+      "hop7+": {
+        "n_pairs_mean": 1500.0,
+        "n_seeds": 10,
+        "dir_acc_strict": 0.931,
+        "dir_acc_strict_sd": 0.015963693375057028,
+        "bootstrap_ci95_strict": [
+          0.9224649999999999,
+          0.9410016666666667
+        ],
+        "dir_acc_tiebreak": 0.931,
+        "bootstrap_ci95_tiebreak": [
+          0.9224649999999999,
+          0.9410016666666667
+        ],
+        "tie_fraction": 0.0,
+        "per_seed_strict": [
+          0.936,
+          0.912,
+          0.9293333333333333,
+          0.924,
+          0.9266666666666666,
+          0.9233333333333333,
+          0.9133333333333333,
+          0.9673333333333334,
+          0.936,
+          0.942
+        ]
+      }
+    }
+  }
+}

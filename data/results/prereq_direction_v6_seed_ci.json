@@ -1,0 +1,80 @@
+{
+  "source_file": "prereq_direction_v6_results.json",
+  "source_protocol": "independent Junyi-DAG held-out direction + 2-hop transitivity; frozen v4 config (no tuning on test); 10 seeds; pooled-binomial Wilson CI over pairs x seeds",
+  "estimator": "percentile bootstrap over per-seed direction accuracies, 20000 resamples, seed=42; identical to prereq_probe_controls.py",
+  "why": "the pooled-binomial Wilson CI in the source file treats the same held-out pairs, re-tested under 10 seeds, as independent Bernoulli trials; that understates the interval by roughly sqrt(n_seeds) (audit fix B6)",
+  "arms": {
+    "EduBind": {
+      "n_seeds": 10,
+      "per_seed_diracc": [
+        0.509,
+        0.469,
+        0.4925,
+        0.479,
+        0.4875,
+        0.471,
+        0.4895,
+        0.461,
+        0.4935,
+        0.492
+      ],
+      "mean": 0.48439999999999994,
+      "sd": 0.014299961149908379,
+      "sem": 0.0045220447685631,
+      "pooled_wilson_ci95": [
+        0.4774773874911056,
+        0.49132860425400016
+      ],
+      "pooled_width": 0.01385121676289458,
+      "seed_bootstrap_ci95": [
+        0.47590000000000005,
+        0.49269999999999997
+      ],
+      "seed_bootstrap_width": 0.016799999999999926,
+      "width_ratio_seed_over_pooled": 1.2128898339822904,
+      "pooled_excludes_chance": true,
+      "seed_bootstrap_excludes_chance": true,
+      "t_test_vs_chance": {
+        "t": -3.4497668197471274,
+        "p": 0.007277391679965755,
+        "df": 9
+      }
+    },
+    "MAP": {
+      "n_seeds": 10,
+      "per_seed_diracc": [
+        0.156,
+        0.1515,
+        0.152,
+        0.154,
+        0.1605,
+        0.1575,
+        0.169,
+        0.1445,
+        0.138,
+        0.16
+      ],
+      "mean": 0.1543,
+      "sd": 0.008660895514385978,
+      "sem": 0.00273881564021953,
+      "pooled_wilson_ci95": [
+        0.14935995312073785,
+        0.15937282548714715
+      ],
+      "pooled_width": 0.010012872366409298,
+      "seed_bootstrap_ci95": [
+        0.1491,
+        0.15925
+      ],
+      "seed_bootstrap_width": 0.010149999999999992,
+      "width_ratio_seed_over_pooled": 1.0136951344801641,
+      "pooled_excludes_chance": true,
+      "seed_bootstrap_excludes_chance": true,
+      "t_test_vs_chance": {
+        "t": -126.22244262205628,
+        "p": 6.246521780734467e-16,
+        "df": 9
+      }
+    }
+  }
+}
